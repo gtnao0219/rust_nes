@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NES</title>
+  </head>
+  <body>
+    <canvas id="game" width="256px" height="240px"></canvas>
+    <script type="module">
+      import init, { WasmNES } from "/pkg/rust_nes.js";
+
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+
+      window.render_canvas = function (data) {
+        const imageData = new ImageData(
+          new Uint8ClampedArray(data),
+          256,
+          240
+        );
+        ctx.putImageData(imageData, 0, 0);
+      };
+
+      async function main() {
+        const response = await fetch("/nes/sample1.nes");
+        const arrayBuffer = await response.arrayBuffer();
+        const romData = new Uint8Array(arrayBuffer);
+
+        await init();
+        const wasmNES = WasmNES.new(romData);
+        function loop() {
+          wasmNES.frame();
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      }
+      main();
+    </script>
+  </body>
+</html>
