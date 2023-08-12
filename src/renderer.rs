@@ -1,6 +1,6 @@
 use crate::{
     ppu::{BackgroundCell, RenderingData, SCREEN_HEIGHT, SCREEN_WIDTH, Background, Sprite},
-    render_canvas, console_log,
+    render_canvas,
 };
 
 pub struct Renderer {

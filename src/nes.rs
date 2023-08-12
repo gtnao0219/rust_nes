@@ -2,7 +2,6 @@ use std::{cell::RefCell, rc::Rc};
 
 use crate::{
     cartridge::Cartridge,
-    console_log,
     controller::Controller,
     cpu::{CPUBus, CPU},
     interrupt,

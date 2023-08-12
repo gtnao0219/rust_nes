@@ -1,11 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{
-    console_log,
-    interrupt::{self, Interrupt},
-    ram::RAM,
-    Byte, Cycle, Word,
-};
+use crate::{interrupt::Interrupt, log, ram::RAM, Byte, Cycle, Word};
 
 mod bus;
 mod decoder;
@@ -35,7 +30,10 @@ impl CPU {
     }
 
     pub fn reset(&mut self) {
-        self.register.set_pc(self.read_word(0xFFFC))
+        log("CPU reset...");
+        let pc = self.read_word(0xFFFC);
+        self.register.set_pc(if pc == 0 { 0x8000 } else { pc });
+        log(&format!("PC: {:04X}", self.register.get_pc()));
     }
     pub fn run(&mut self) -> Cycle {
         if self.interrupt.borrow().is_nmi() {

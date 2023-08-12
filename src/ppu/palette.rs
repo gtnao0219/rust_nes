@@ -18,7 +18,7 @@ impl Palette {
         if Self::is_background_mirror(addr) {
             0x00
         } else if Self::is_sprite_mirror(addr) {
-            Self::get_addr(addr - 0x10)
+            addr - 0x10
         } else {
             addr
         }

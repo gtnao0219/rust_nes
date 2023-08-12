@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{console_log, controller::Controller, ppu::PPU, rom::ROM, Byte, Word, dma::DMA};
+use crate::{controller::Controller, dma::DMA, log, ppu::PPU, rom::ROM, Byte, Word};
 
 use super::WRAM;
 
@@ -46,18 +46,21 @@ impl CPUBus {
                 }
             }
             0x4000..=0x401F => {
-                console_log("APU registers are not implemented yet");
+                log(&format!(
+                    "APU registers are not implemented yet: {:04X}",
+                    address
+                ));
                 0x00
             }
             0x4020..=0x5FFF => {
-                // console_log(&format!(
-                //     "Expansion ROM is not implemented yet: {:04X}",
-                //     address
-                // ));
+                log(&format!(
+                    "Expansion ROM is not implemented yet: {:04X}",
+                    address
+                ));
                 0x00
             }
             0x6000..=0x7FFF => {
-                // console_log(&format!("SRAM is not implemented yet: {:04X}", address));
+                log(&format!("SRAM is not implemented yet: {:04X}", address));
                 0x00
             }
             0x8000..=0xBFFF => self.program_rom.read(address - 0x8000),
@@ -80,10 +83,13 @@ impl CPUBus {
                 self.controller.borrow_mut().write(data);
             }
             0x4000..=0x401F => {
-                console_log("APU registers are not implemented yet");
+                log(&format!(
+                    "APU registers are not implemented yet: {:04X}",
+                    address
+                ));
             }
             _ => {
-                // console_log(&format!("Write to {:04X} is not implemented yet", address));
+                log(&format!("Write to ROM: {:04X}", address));
             }
         }
     }

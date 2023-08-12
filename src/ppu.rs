@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{console_log, interrupt::Interrupt, ram::RAM, Cycle, Word, Byte};
+use crate::{interrupt::Interrupt, ram::RAM, Byte, Cycle, Word, log};
 
 mod background;
 mod bus;
@@ -87,7 +87,7 @@ impl PPU {
                 self.line = 0;
                 self.interrupt.borrow_mut().clear_nmi();
 
-                // console_log(&format!("background: {:?}", &self.background.lines[14]));
+                log(&format!("palette: {:?}", self.bus.palette));
 
                 return Some(RenderingData {
                     background: self.background.clone(),
@@ -130,7 +130,8 @@ impl PPU {
 
     pub fn transfer_sprite(&mut self, index: Byte, data: Byte) {
         let address = self.registers.get_oam_address();
-        self.oam.write(((address as u16 + index as u16) % 0x100) as u8, data);
+        self.oam
+            .write(((address as u16 + index as u16) % 0x100) as u8, data);
     }
 
     fn build_sprites(&mut self) {

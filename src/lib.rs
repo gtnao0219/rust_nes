@@ -42,6 +42,6 @@ impl WasmNES {
     }
 }
 
-pub fn console_log(s: &str) {
+pub fn log(s: &str) {
     log_1(&JsValue::from(s));
 }

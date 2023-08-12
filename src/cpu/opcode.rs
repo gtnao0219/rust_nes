@@ -1,4 +1,4 @@
-use crate::{console_log, Byte, Cycle};
+use crate::{Byte, Cycle, log};
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Addressing {
@@ -1319,7 +1319,7 @@ pub fn get_opcode(byte: Byte) -> Opcode {
             cycle: 8,
         },
         _ => {
-            console_log(&format!("Unknown opcode: {:X}", byte));
+            log(&format!("Unknown opcode: {:X}", byte));
             panic!("Unknown opcode: {:X}", byte);
         }
     }

@@ -1,4 +1,4 @@
-use crate::{Byte, Word, console_log};
+use crate::{Byte, Word};
 
 #[derive(Debug)]
 pub struct PPURegisters {
@@ -131,10 +131,10 @@ impl PPURegisters {
         self.status &= 0b01111111;
     }
 
-//     pub fn scroll_tile_x(&self) -> u8 {
-//         (self.scroll_x + (self.name_table_id() % 2) * 256) / 8
-//     }
-//     pub fn scroll_tile_y(&self) -> u8 {
-//         (self.scroll_y + (self.name_table_id() / 2) * 240) / 8
-//     }
+    //     pub fn scroll_tile_x(&self) -> u8 {
+    //         (self.scroll_x + (self.name_table_id() % 2) * 256) / 8
+    //     }
+    //     pub fn scroll_tile_y(&self) -> u8 {
+    //         (self.scroll_y + (self.name_table_id() / 2) * 240) / 8
+    //     }
 }

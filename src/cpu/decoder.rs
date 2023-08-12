@@ -1,4 +1,4 @@
-use crate::{console_log, Word};
+use crate::Word;
 
 use super::{
     opcode::{Addressing, Opcode},
@@ -89,7 +89,8 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
 
             // bug
             let indirect_address_low = cpu.read_byte(address) as Word;
-            let indirect_address_high = cpu.read_byte((address & 0xFF00) | ((address + 1) & 0x00FF)) as Word;
+            let indirect_address_high =
+                cpu.read_byte((address & 0xFF00) | ((address + 1) & 0x00FF)) as Word;
             let indirect_address = (indirect_address_high << 8) | indirect_address_low;
 
             DecodeResult {

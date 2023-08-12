@@ -1,4 +1,4 @@
-use crate::{Byte, Word, console_log};
+use crate::{Byte, Word};
 
 #[derive(Debug)]
 pub struct CPURegister {

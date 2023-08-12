@@ -1,4 +1,4 @@
-use crate::{console_log, Byte, Word};
+use crate::{Byte, Word};
 
 use super::{
     opcode::{Addressing, Opcode, OpcodeBaseName},
