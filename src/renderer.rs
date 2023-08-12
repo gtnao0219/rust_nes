@@ -59,8 +59,8 @@ impl Renderer {
     fn set_sprite(&mut self, sprite: &Sprite) {
         for i in 0..8 {
             for j in 0..8 {
-                let x = sprite.x as isize + i;
-                let y = sprite.y as isize + j;
+                let y = sprite.y as isize + i;
+                let x = sprite.x as isize + j;
                 let color_id = sprite.attribute.palette_value[sprite.tile.data[i as usize][j as usize] as usize];
                 let color = COLORS[color_id as usize];
                 let index = (y * 256 + x) * 4;

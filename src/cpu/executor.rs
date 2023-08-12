@@ -63,6 +63,17 @@ pub fn execute(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
         OpcodeBaseName::SEI => execute_sei(cpu, opcode, operand),
         OpcodeBaseName::BRK => execute_brk(cpu, opcode, operand),
         OpcodeBaseName::NOP => {}
+
+        OpcodeBaseName::NOPD => {}
+        OpcodeBaseName::NOPI => {}
+        OpcodeBaseName::LAX => execute_lax(cpu, opcode, operand),
+        OpcodeBaseName::SAX => execute_sax(cpu, opcode, operand),
+        OpcodeBaseName::DCP => execute_dcp(cpu, opcode, operand),
+        OpcodeBaseName::ISB => execute_isb(cpu, opcode, operand),
+        OpcodeBaseName::SLO => execute_slo(cpu, opcode, operand),
+        OpcodeBaseName::RLA => execute_rla(cpu, opcode, operand),
+        OpcodeBaseName::SRE => execute_sre(cpu, opcode, operand),
+        OpcodeBaseName::RRA => execute_rra(cpu, opcode, operand),
     }
 }
 
@@ -137,7 +148,6 @@ fn execute_txs(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     let value = cpu.get_register().get_x();
     let register = cpu.get_register();
     register.set_s(value);
-    register.set_zn_by(value);
 }
 fn execute_tya(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     let value = cpu.get_register().get_y();
@@ -330,6 +340,7 @@ fn execute_pha(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     cpu.push(a);
 }
 fn execute_php(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
+    cpu.get_register().set_b();
     cpu.push_status();
 }
 fn execute_pla(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
@@ -339,6 +350,7 @@ fn execute_pla(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     register.set_zn_by(value);
 }
 fn execute_plp(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
+    cpu.get_register().set_r();
     cpu.pop_status();
 }
 
@@ -348,7 +360,6 @@ fn execute_jmp(cpu: &mut CPU, _opcode: &Opcode, operand: &Word) {
 fn execute_jsr(cpu: &mut CPU, _opcode: &Opcode, operand: &Word) {
     cpu.get_register().decrement_pc_byte();
     cpu.push_pc();
-    cpu.push_status();
     cpu.get_register().set_pc(*operand);
 }
 fn execute_rts(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
@@ -358,6 +369,7 @@ fn execute_rts(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
 fn execute_rti(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     cpu.pop_status();
     cpu.pop_pc();
+    cpu.get_register().set_r()
 }
 
 fn execute_bcc(cpu: &mut CPU, _opcode: &Opcode, operand: &Word) {
@@ -435,3 +447,40 @@ fn execute_brk(cpu: &mut CPU, _opcode: &Opcode, _operand: &Word) {
     }
     cpu.get_register().decrement_pc_byte()
 }
+
+fn execute_lax(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_lda(cpu, opcode, operand);
+    execute_ldx(cpu, opcode, operand);
+}
+fn execute_sax(cpu: &mut CPU, _opcode: &Opcode, operand: &Word) {
+    let register = cpu.get_register();
+    let a = register.get_a();
+    let x = register.get_x();
+    let value = a & x;
+    cpu.write(*operand, value);
+}
+fn execute_isb(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_inc(cpu, opcode, operand);
+    execute_sbc(cpu, opcode, operand);
+}
+fn execute_dcp(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_dec(cpu, opcode, operand);
+    execute_cmp(cpu, opcode, operand);
+}
+fn execute_slo(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_asl(cpu, opcode, operand);
+    execute_ora(cpu, opcode, operand);
+}
+fn execute_rla(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_rol(cpu, opcode, operand);
+    execute_and(cpu, opcode, operand);
+}
+fn execute_sre(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_lsr(cpu, opcode, operand);
+    execute_eor(cpu, opcode, operand);
+}
+fn execute_rra(cpu: &mut CPU, opcode: &Opcode, operand: &Word) {
+    execute_ror(cpu, opcode, operand);
+    execute_adc(cpu, opcode, operand);
+}
+

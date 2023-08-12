@@ -1,4 +1,4 @@
-use crate::{Byte, Cycle};
+use crate::{console_log, Byte, Cycle};
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Addressing {
@@ -81,6 +81,17 @@ pub enum OpcodeBaseName {
 
     BRK,
     NOP,
+
+    NOPD,
+    NOPI,
+    LAX,
+    SAX,
+    DCP,
+    ISB,
+    SLO,
+    RLA,
+    SRE,
+    RRA,
 }
 
 #[derive(Debug)]
@@ -847,6 +858,469 @@ pub fn get_opcode(byte: Byte) -> Opcode {
             addressing: Addressing::Implied,
             cycle: 2,
         },
-        _ => panic!("Unknown opcode: {:X}", byte),
+        0x1A => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x3A => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x5A => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x7A => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0xDA => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0xFA => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x02 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x12 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x22 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x32 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x42 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x52 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x62 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x72 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x92 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0xB2 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0xD2 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0xF2 => Opcode {
+            base_name: OpcodeBaseName::NOP,
+            addressing: Addressing::Implied,
+            cycle: 2,
+        },
+        0x80 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0x82 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0x89 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0xC2 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0xE2 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0x04 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPage,
+            cycle: 3,
+        },
+        0x44 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPage,
+            cycle: 3,
+        },
+        0x64 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPage,
+            cycle: 3,
+        },
+        0x14 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0x34 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0x54 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0x74 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0xD4 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0xF4 => Opcode {
+            base_name: OpcodeBaseName::NOPD,
+            addressing: Addressing::ZeroPageX,
+            cycle: 4,
+        },
+        0x0C => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::Absolute,
+            cycle: 4,
+        },
+        0x1C => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0x3C => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0x5C => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0x7C => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0xDC => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0xFC => Opcode {
+            base_name: OpcodeBaseName::NOPI,
+            addressing: Addressing::AbsoluteX,
+            cycle: 4,
+        },
+        0xA7 => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::ZeroPage,
+            cycle: 3,
+        },
+        0xB7 => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::ZeroPageY,
+            cycle: 4,
+        },
+        0xAF => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::Absolute,
+            cycle: 4,
+        },
+        0xBF => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::AbsoluteY,
+            cycle: 4,
+        },
+        0xA3 => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::IndirectX,
+            cycle: 6,
+        },
+        0xB3 => Opcode {
+            base_name: OpcodeBaseName::LAX,
+            addressing: Addressing::IndirectY,
+            cycle: 5,
+        },
+        0x87 => Opcode {
+            base_name: OpcodeBaseName::SAX,
+            addressing: Addressing::ZeroPage,
+            cycle: 3,
+        },
+        0x97 => Opcode {
+            base_name: OpcodeBaseName::SAX,
+            addressing: Addressing::ZeroPageY,
+            cycle: 4,
+        },
+        0x8F => Opcode {
+            base_name: OpcodeBaseName::SAX,
+            addressing: Addressing::Absolute,
+            cycle: 4,
+        },
+        0x83 => Opcode {
+            base_name: OpcodeBaseName::SAX,
+            addressing: Addressing::IndirectX,
+            cycle: 6,
+        },
+        0xEB => Opcode {
+            base_name: OpcodeBaseName::SBC,
+            addressing: Addressing::Immediate,
+            cycle: 2,
+        },
+        0xC7 => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0xD7 => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0xCF => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0xDF => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0xDB => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0xC3 => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0xD3 => Opcode {
+            base_name: OpcodeBaseName::DCP,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        0xE7 => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0xF7 => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0xEF => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0xFF => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0xFB => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0xE3 => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0xF3 => Opcode {
+            base_name: OpcodeBaseName::ISB,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        0x07 => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0x17 => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0x0F => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0x1F => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0x1B => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0x03 => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0x13 => Opcode {
+            base_name: OpcodeBaseName::SLO,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        0x27 => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0x37 => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0x2F => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0x3F => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0x3B => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0x23 => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0x33 => Opcode {
+            base_name: OpcodeBaseName::RLA,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        0x47 => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0x57 => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0x4F => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0x5F => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0x5B => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0x43 => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0x53 => Opcode {
+            base_name: OpcodeBaseName::SRE,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        0x67 => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::ZeroPage,
+            cycle: 5,
+        },
+        0x77 => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::ZeroPageX,
+            cycle: 6,
+        },
+        0x6F => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::Absolute,
+            cycle: 6,
+        },
+        0x7F => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::AbsoluteX,
+            cycle: 7,
+        },
+        0x7B => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::AbsoluteY,
+            cycle: 7,
+        },
+        0x63 => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::IndirectX,
+            cycle: 8,
+        },
+        0x73 => Opcode {
+            base_name: OpcodeBaseName::RRA,
+            addressing: Addressing::IndirectY,
+            cycle: 8,
+        },
+        _ => {
+            console_log(&format!("Unknown opcode: {:X}", byte));
+            panic!("Unknown opcode: {:X}", byte);
+        }
     }
 }

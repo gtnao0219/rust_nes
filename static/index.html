@@ -22,13 +22,50 @@
         ctx.putImageData(imageData, 0, 0);
       };
 
+      function getKeyIndex(keyCode) {
+        switch (keyCode) {
+          case 88: // X => A
+            return 0;
+          case 90: // Z => B
+            return 1;
+          case 32: // Space => Select
+            return 2;
+          case 13: // Enter => Start
+            return 3;
+          case 38: // Up => Up
+            return 4;
+          case 40: // Down => Down
+            return 5;
+          case 37: // Left => Left
+            return 6;
+          case 39: // Right => Right
+            return 7;
+          default:
+            return null
+        }
+      }
+
       async function main() {
-        const response = await fetch("/nes/sample1.nes");
+        const response = await fetch("/nes/rustynes/nestest.nes");
         const arrayBuffer = await response.arrayBuffer();
         const romData = new Uint8Array(arrayBuffer);
 
         await init();
         const wasmNES = WasmNES.new(romData);
+        document.addEventListener('keydown', event => {
+          const keyIndex = getKeyIndex(event.keyCode);
+          if (keyIndex == null) {
+            return;
+          }
+          wasmNES.key_down(keyIndex);
+        });
+        document.addEventListener('keyup', event => {
+          const keyIndex = getKeyIndex(event.keyCode);
+          if (keyIndex == null) {
+            return;
+          }
+          wasmNES.key_up(keyIndex);
+        });
         function loop() {
           wasmNES.frame();
           requestAnimationFrame(loop);

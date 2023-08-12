@@ -39,7 +39,7 @@ impl Default for CPUStatusRegister {
             z: false,
             i: true,
             d: false,
-            b: true,
+            b: false,
             r: true,
             v: false,
             n: false,
@@ -179,6 +179,15 @@ impl CPURegister {
     }
     pub fn set_b(&mut self) {
         self.p.b = true;
+    }
+    pub fn get_r(&self) -> bool {
+        self.p.r
+    }
+    pub fn clear_r(&mut self) {
+        self.p.r = false;
+    }
+    pub fn set_r(&mut self) {
+        self.p.r = true;
     }
     pub fn get_v(&self) -> bool {
         self.p.v

@@ -95,7 +95,6 @@ impl CPU {
         let lo = self.pop() as Word;
         let hi = self.pop() as Word;
         self.register.set_pc((hi << 8) | lo);
-        self.register.increment_pc_byte();
     }
     fn branch(&mut self, address: Word) {
         self.register.set_pc(address);

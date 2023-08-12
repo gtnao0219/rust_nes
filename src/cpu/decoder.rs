@@ -35,7 +35,7 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         Addressing::ZeroPageX => {
             let base = cpu.fetch_byte() as Word;
             let offset = cpu.get_register().get_x() as Word;
-            let address = base + offset;
+            let address = (base + offset) & 0x00FF;
             DecodeResult {
                 operand: address,
                 page_crossed: false,
@@ -44,7 +44,7 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         Addressing::ZeroPageY => {
             let base = cpu.fetch_byte() as Word;
             let offset = cpu.get_register().get_y() as Word;
-            let address = base + offset;
+            let address = (base + offset) & 0x00FF;
             DecodeResult {
                 operand: address,
                 page_crossed: false,
@@ -68,8 +68,8 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         }
         Addressing::AbsoluteX => {
             let base = cpu.fetch_word();
-            let offset = cpu.get_register().get_x() as Word;
-            let address = base + offset;
+            let offset = cpu.get_register().get_x();
+            let address = (base as u32 + offset as u32) as Word;
             DecodeResult {
                 operand: address,
                 page_crossed: page_crossed(base, address),
@@ -77,8 +77,8 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         }
         Addressing::AbsoluteY => {
             let base = cpu.fetch_word();
-            let offset = cpu.get_register().get_y() as Word;
-            let address = base + offset;
+            let offset = cpu.get_register().get_y();
+            let address = (base as u32 + offset as u32) as Word;
             DecodeResult {
                 operand: address,
                 page_crossed: page_crossed(base, address),
@@ -86,7 +86,12 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         }
         Addressing::Indirect => {
             let address = cpu.fetch_word();
-            let indirect_address = cpu.read_word(address);
+
+            // bug
+            let indirect_address_low = cpu.read_byte(address) as Word;
+            let indirect_address_high = cpu.read_byte((address & 0xFF00) | ((address + 1) & 0x00FF)) as Word;
+            let indirect_address = (indirect_address_high << 8) | indirect_address_low;
+
             DecodeResult {
                 operand: indirect_address,
                 page_crossed: page_crossed(address, indirect_address),
@@ -95,8 +100,12 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         Addressing::IndirectX => {
             let base = cpu.fetch_byte() as Word;
             let offset = cpu.get_register().get_x() as Word;
-            let address = base + offset;
-            let indirect_address = cpu.read_word(address);
+            let address = (base + offset) & 0x00FF;
+
+            let indirect_address_low = cpu.read_byte(address) as Word;
+            let indirect_address_high = cpu.read_byte((address + 1) & 0x00FF) as Word;
+            let indirect_address = (indirect_address_high << 8) | indirect_address_low;
+
             DecodeResult {
                 operand: indirect_address,
                 page_crossed: page_crossed(address, indirect_address),
@@ -104,7 +113,9 @@ pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
         }
         Addressing::IndirectY => {
             let base = cpu.fetch_byte() as Word;
-            let address = cpu.read_word(base);
+            let address_low = cpu.read_byte(base) as Word;
+            let address_high = cpu.read_byte((base + 1) & 0x00FF) as Word;
+            let address = (address_high << 8) | address_low;
             let offset = cpu.get_register().get_y() as Word;
             let indirect_address = address + offset;
             DecodeResult {

@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{console_log, interrupt::Interrupt, ram::RAM, Cycle, Word};
+use crate::{console_log, interrupt::Interrupt, ram::RAM, Cycle, Word, Byte};
 
 mod background;
 mod bus;
@@ -126,6 +126,11 @@ impl PPU {
             }
             _ => panic!("invjlid ppu write address: {:04X}", addr),
         }
+    }
+
+    pub fn transfer_sprite(&mut self, index: Byte, data: Byte) {
+        let address = self.registers.get_oam_address();
+        self.oam.write(((address as u16 + index as u16) % 0x100) as u8, data);
     }
 
     fn build_sprites(&mut self) {

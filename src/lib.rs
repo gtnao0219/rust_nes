@@ -34,6 +34,12 @@ impl WasmNES {
     pub fn frame(&mut self) {
         self.0.frame();
     }
+    pub fn key_down(&mut self, key: u8) {
+        self.0.key_down(key);
+    }
+    pub fn key_up(&mut self, key: u8) {
+        self.0.key_up(key);
+    }
 }
 
 pub fn console_log(s: &str) {
