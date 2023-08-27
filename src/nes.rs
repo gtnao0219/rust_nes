@@ -21,12 +21,21 @@ impl NES {
         let cartridge = Cartridge::new(rom_data);
 
         let interrupt = Rc::new(RefCell::new(interrupt::Interrupt::default()));
-        let ppu_bus = PPUBus::new(cartridge.character_rom);
+        let ppu_bus = PPUBus::new(cartridge.character_rom, cartridge.is_horizontal_mirroring);
         let ppu = Rc::new(RefCell::new(PPU::new(ppu_bus, interrupt.clone())));
         let controller = Rc::new(RefCell::new(Controller::default()));
         let wram = Rc::new(RefCell::new(crate::cpu::WRAM::default()));
-        let dma = Rc::new(RefCell::new(crate::dma::DMA::new(wram.clone(), ppu.clone())));
-        let cpu_bus = CPUBus::new(cartridge.program_rom, wram.clone(), ppu.clone(), controller.clone(), dma.clone());
+        let dma = Rc::new(RefCell::new(crate::dma::DMA::new(
+            wram.clone(),
+            ppu.clone(),
+        )));
+        let cpu_bus = CPUBus::new(
+            cartridge.program_rom,
+            wram.clone(),
+            ppu.clone(),
+            controller.clone(),
+            dma.clone(),
+        );
         let mut cpu = CPU::new(cpu_bus, interrupt.clone());
         cpu.reset();
 
@@ -38,13 +47,10 @@ impl NES {
         }
     }
 
-    pub fn frame(&mut self) {
+    pub fn frame(&mut self) -> () {
         loop {
             let mut cycle = 0;
-            if self.dma.borrow().is_processing() {
-                self.dma.borrow_mut().run();
-                cycle += 513;
-            }
+            cycle += self.dma.borrow_mut().run();
             cycle += self.cpu.run();
             let rendering_data = self.ppu.borrow_mut().run(cycle * 3);
             if let Some(rendering_data) = rendering_data {

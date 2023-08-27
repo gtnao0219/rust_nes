@@ -7,18 +7,303 @@
   </head>
   <body>
     <canvas id="game" width="256px" height="240px"></canvas>
+    <select id="cartridge">
+      <option value="hello_world.nes">Hello, World!</option>
+      <option value="pac_man.nes">PAC-MAN</option>
+      <option value="super_mario_bros.nes">Super Mario Bros</option>
+      <option value="nestest.nes">nestest</option>
+      <option value="color_test.nes">ColorTest</option>
+      <option value="dushlan.nes">dushlan</option>
+      <option value="falling.nes">falling</option>
+      <option value="firedemo.nes">firedemo</option>
+      <option value="SHOOT.nes">SHOOT</option>
+      <option value="MapWalker.nes">MapWalker</option>
+      <option value="giko005.nes">giko005</option>
+      <option value="giko008.nes">giko008</option>
+      <option value="giko009.nes">giko009</option>
+      <option value="giko011.nes">giko011</option>
+      <option value="giko012.nes">giko012</option>
+      <option value="giko013.nes">giko013</option>
+      <option value="giko015.nes">giko015</option>
+      <option value="giko016.nes">giko016</option>
+      <option value="giko017.nes">giko017</option>
+      <option value="giko019.nes">giko019</option>
+      <option value="nes-test-roms/other/test001.nes">nes-test-roms/other/test001.nes</option>
+      <option value="nes-test-roms/other/midscanline.nes">nes-test-roms/other/midscanline.nes</option>
+      <option value="nes-test-roms/other/physics.0.1.nes">nes-test-roms/other/physics.0.1.nes</option>
+      <option value="nes-test-roms/other/max-300.nes">nes-test-roms/other/max-300.nes</option>
+      <option value="nes-test-roms/other/high-hopes.nes">nes-test-roms/other/high-hopes.nes</option>
+      <option value="nes-test-roms/other/demo.nes">nes-test-roms/other/demo.nes</option>
+      <option value="nes-test-roms/other/demo jitter.nes">nes-test-roms/other/demo jitter.nes</option>
+      <option value="nes-test-roms/other/PCM.demo.wgraphics.nes">nes-test-roms/other/PCM.demo.wgraphics.nes</option>
+      <option value="nes-test-roms/other/2003-test.nes">nes-test-roms/other/2003-test.nes</option>
+      <option value="nes-test-roms/other/blargg_litewall-9.nes">nes-test-roms/other/blargg_litewall-9.nes</option>
+      <option value="nes-test-roms/other/rastesam4.nes">nes-test-roms/other/rastesam4.nes</option>
+      <option value="nes-test-roms/other/nestest.nes">nes-test-roms/other/nestest.nes</option>
+      <option value="nes-test-roms/other/manhole.nes">nes-test-roms/other/manhole.nes</option>
+      <option value="nes-test-roms/other/fceuxd.nes">nes-test-roms/other/fceuxd.nes</option>
+      <option value="nes-test-roms/other/window2_pal.nes">nes-test-roms/other/window2_pal.nes</option>
+      <option value="nes-test-roms/other/SimpleParallaxDemo.nes">nes-test-roms/other/SimpleParallaxDemo.nes</option>
+      <option value="nes-test-roms/other/oam3.nes">nes-test-roms/other/oam3.nes</option>
+      <option value="nes-test-roms/other/logo (E).nes">nes-test-roms/other/logo (E).nes</option>
+      <option value="nes-test-roms/other/nintendulator.nes">nes-test-roms/other/nintendulator.nes</option>
+      <option value="nes-test-roms/other/window_old_pal.nes">nes-test-roms/other/window_old_pal.nes</option>
+      <option value="nes-test-roms/other/read2004.nes">nes-test-roms/other/read2004.nes</option>
+      <option value="nes-test-roms/other/firefly.nes">nes-test-roms/other/firefly.nes</option>
+      <option value="nes-test-roms/other/new-game.nes">nes-test-roms/other/new-game.nes</option>
+      <option value="nes-test-roms/other/oc.nes">nes-test-roms/other/oc.nes</option>
+      <option value="nes-test-roms/other/snow.nes">nes-test-roms/other/snow.nes</option>
+      <option value="nes-test-roms/other/Streemerz_bundle.nes">nes-test-roms/other/Streemerz_bundle.nes</option>
+      <option value="nes-test-roms/other/8bitpeoples_-_deadline_console_invitro.nes">nes-test-roms/other/8bitpeoples_-_deadline_console_invitro.nes</option>
+      <option value="nes-test-roms/other/blargg_litewall-2.nes">nes-test-roms/other/blargg_litewall-2.nes</option>
+      <option value="nes-test-roms/other/test28.nes">nes-test-roms/other/test28.nes</option>
+      <option value="nes-test-roms/other/pulsar.nes">nes-test-roms/other/pulsar.nes</option>
+      <option value="nes-test-roms/other/apocalypse.nes">nes-test-roms/other/apocalypse.nes</option>
+      <option value="nes-test-roms/other/nestopia.nes">nes-test-roms/other/nestopia.nes</option>
+      <option value="nes-test-roms/other/Duelito.nes">nes-test-roms/other/Duelito.nes</option>
+      <option value="nes-test-roms/other/nescafe.nes">nes-test-roms/other/nescafe.nes</option>
+      <option value="nes-test-roms/other/window2_ntsc.nes">nes-test-roms/other/window2_ntsc.nes</option>
+      <option value="nes-test-roms/other/BladeBuster.nes">nes-test-roms/other/BladeBuster.nes</option>
+      <option value="nes-test-roms/other/window_old_ntsc.nes">nes-test-roms/other/window_old_ntsc.nes</option>
+      <option value="nes-test-roms/other/quantum_disco_brothers_by_wAMMA.nes">nes-test-roms/other/quantum_disco_brothers_by_wAMMA.nes</option>
+      <option value="nes-test-roms/other/minipack.nes">nes-test-roms/other/minipack.nes</option>
+      <option value="nes-test-roms/spritecans-2011/spritecans.nes">nes-test-roms/spritecans-2011/spritecans.nes</option>
+      <option value="nes-test-roms/nmi_sync/demo_ntsc.nes">nes-test-roms/nmi_sync/demo_ntsc.nes</option>
+      <option value="nes-test-roms/nmi_sync/demo_pal.nes">nes-test-roms/nmi_sync/demo_pal.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/15-brk.nes">nes-test-roms/instr_test-v5/rom_singles/15-brk.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/01-basics.nes">nes-test-roms/instr_test-v5/rom_singles/01-basics.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/16-special.nes">nes-test-roms/instr_test-v5/rom_singles/16-special.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/14-rti.nes">nes-test-roms/instr_test-v5/rom_singles/14-rti.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/05-zp_xy.nes">nes-test-roms/instr_test-v5/rom_singles/05-zp_xy.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/08-ind_x.nes">nes-test-roms/instr_test-v5/rom_singles/08-ind_x.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/06-absolute.nes">nes-test-roms/instr_test-v5/rom_singles/06-absolute.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/11-stack.nes">nes-test-roms/instr_test-v5/rom_singles/11-stack.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/09-ind_y.nes">nes-test-roms/instr_test-v5/rom_singles/09-ind_y.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/03-immediate.nes">nes-test-roms/instr_test-v5/rom_singles/03-immediate.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/12-jmp_jsr.nes">nes-test-roms/instr_test-v5/rom_singles/12-jmp_jsr.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/13-rts.nes">nes-test-roms/instr_test-v5/rom_singles/13-rts.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/04-zero_page.nes">nes-test-roms/instr_test-v5/rom_singles/04-zero_page.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/10-branches.nes">nes-test-roms/instr_test-v5/rom_singles/10-branches.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/02-implied.nes">nes-test-roms/instr_test-v5/rom_singles/02-implied.nes</option>
+      <option value="nes-test-roms/instr_test-v5/rom_singles/07-abs_xy.nes">nes-test-roms/instr_test-v5/rom_singles/07-abs_xy.nes</option>
+      <option value="nes-test-roms/instr_test-v5/all_instrs.nes">nes-test-roms/instr_test-v5/all_instrs.nes</option>
+      <option value="nes-test-roms/instr_test-v5/official_only.nes">nes-test-roms/instr_test-v5/official_only.nes</option>
+      <option value="nes-test-roms/vaus-test/vaus-test.nes">nes-test-roms/vaus-test/vaus-test.nes</option>
+      <option value="nes-test-roms/oam_stress/oam_stress.nes">nes-test-roms/oam_stress/oam_stress.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/02-immediate.nes">nes-test-roms/instr_test-v3/rom_singles/02-immediate.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/03-zero_page.nes">nes-test-roms/instr_test-v3/rom_singles/03-zero_page.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/12-rts.nes">nes-test-roms/instr_test-v3/rom_singles/12-rts.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/04-zp_xy.nes">nes-test-roms/instr_test-v3/rom_singles/04-zp_xy.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/15-special.nes">nes-test-roms/instr_test-v3/rom_singles/15-special.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/06-abs_xy.nes">nes-test-roms/instr_test-v3/rom_singles/06-abs_xy.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/10-stack.nes">nes-test-roms/instr_test-v3/rom_singles/10-stack.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/05-absolute.nes">nes-test-roms/instr_test-v3/rom_singles/05-absolute.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/11-jmp_jsr.nes">nes-test-roms/instr_test-v3/rom_singles/11-jmp_jsr.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/08-ind_y.nes">nes-test-roms/instr_test-v3/rom_singles/08-ind_y.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/01-implied.nes">nes-test-roms/instr_test-v3/rom_singles/01-implied.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/09-branches.nes">nes-test-roms/instr_test-v3/rom_singles/09-branches.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/14-brk.nes">nes-test-roms/instr_test-v3/rom_singles/14-brk.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/13-rti.nes">nes-test-roms/instr_test-v3/rom_singles/13-rti.nes</option>
+      <option value="nes-test-roms/instr_test-v3/rom_singles/07-ind_x.nes">nes-test-roms/instr_test-v3/rom_singles/07-ind_x.nes</option>
+      <option value="nes-test-roms/instr_test-v3/all_instrs.nes">nes-test-roms/instr_test-v3/all_instrs.nes</option>
+      <option value="nes-test-roms/instr_test-v3/official_only.nes">nes-test-roms/instr_test-v3/official_only.nes</option>
+      <option value="nes-test-roms/apu_mixer/triangle.nes">nes-test-roms/apu_mixer/triangle.nes</option>
+      <option value="nes-test-roms/apu_mixer/dmc.nes">nes-test-roms/apu_mixer/dmc.nes</option>
+      <option value="nes-test-roms/apu_mixer/noise.nes">nes-test-roms/apu_mixer/noise.nes</option>
+      <option value="nes-test-roms/apu_mixer/square.nes">nes-test-roms/apu_mixer/square.nes</option>
+      <option value="nes-test-roms/cpu_reset/registers.nes">nes-test-roms/cpu_reset/registers.nes</option>
+      <option value="nes-test-roms/cpu_reset/ram_after_reset.nes">nes-test-roms/cpu_reset/ram_after_reset.nes</option>
+      <option value="nes-test-roms/dpcmletterbox/dpcmletterbox.nes">nes-test-roms/dpcmletterbox/dpcmletterbox.nes</option>
+      <option value="nes-test-roms/cpu_exec_space/test_cpu_exec_space_ppuio.nes">nes-test-roms/cpu_exec_space/test_cpu_exec_space_ppuio.nes</option>
+      <option value="nes-test-roms/cpu_exec_space/test_cpu_exec_space_apu.nes">nes-test-roms/cpu_exec_space/test_cpu_exec_space_apu.nes</option>
+      <option value="nes-test-roms/blargg_litewall/litewall3.nes">nes-test-roms/blargg_litewall/litewall3.nes</option>
+      <option value="nes-test-roms/blargg_litewall/blargg_litewall-9.nes">nes-test-roms/blargg_litewall/blargg_litewall-9.nes</option>
+      <option value="nes-test-roms/blargg_litewall/litewall5.nes">nes-test-roms/blargg_litewall/litewall5.nes</option>
+      <option value="nes-test-roms/blargg_litewall/litewall2.nes">nes-test-roms/blargg_litewall/litewall2.nes</option>
+      <option value="nes-test-roms/blargg_litewall/blargg_litewall-10c.nes">nes-test-roms/blargg_litewall/blargg_litewall-10c.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/cpu_interrupts.nes">nes-test-roms/cpu_interrupts_v2/cpu_interrupts.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/rom_singles/1-cli_latency.nes">nes-test-roms/cpu_interrupts_v2/rom_singles/1-cli_latency.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/rom_singles/4-irq_and_dma.nes">nes-test-roms/cpu_interrupts_v2/rom_singles/4-irq_and_dma.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/rom_singles/2-nmi_and_brk.nes">nes-test-roms/cpu_interrupts_v2/rom_singles/2-nmi_and_brk.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/rom_singles/5-branch_delays_irq.nes">nes-test-roms/cpu_interrupts_v2/rom_singles/5-branch_delays_irq.nes</option>
+      <option value="nes-test-roms/cpu_interrupts_v2/rom_singles/3-nmi_and_irq.nes">nes-test-roms/cpu_interrupts_v2/rom_singles/3-nmi_and_irq.nes</option>
+      <option value="nes-test-roms/blargg_nes_cpu_test5/official.nes">nes-test-roms/blargg_nes_cpu_test5/official.nes</option>
+      <option value="nes-test-roms/blargg_nes_cpu_test5/cpu.nes">nes-test-roms/blargg_nes_cpu_test5/cpu.nes</option>
+      <option value="nes-test-roms/instr_timing/rom_singles/2-branch_timing.nes">nes-test-roms/instr_timing/rom_singles/2-branch_timing.nes</option>
+      <option value="nes-test-roms/instr_timing/rom_singles/1-instr_timing.nes">nes-test-roms/instr_timing/rom_singles/1-instr_timing.nes</option>
+      <option value="nes-test-roms/instr_timing/instr_timing.nes">nes-test-roms/instr_timing/instr_timing.nes</option>
+      <option value="nes-test-roms/cpu_timing_test6/cpu_timing_test.nes">nes-test-roms/cpu_timing_test6/cpu_timing_test.nes</option>
+      <option value="nes-test-roms/sprite_overflow_tests/2.Details.nes">nes-test-roms/sprite_overflow_tests/2.Details.nes</option>
+      <option value="nes-test-roms/sprite_overflow_tests/1.Basics.nes">nes-test-roms/sprite_overflow_tests/1.Basics.nes</option>
+      <option value="nes-test-roms/sprite_overflow_tests/5.Emulator.nes">nes-test-roms/sprite_overflow_tests/5.Emulator.nes</option>
+      <option value="nes-test-roms/sprite_overflow_tests/3.Timing.nes">nes-test-roms/sprite_overflow_tests/3.Timing.nes</option>
+      <option value="nes-test-roms/sprite_overflow_tests/4.Obscure.nes">nes-test-roms/sprite_overflow_tests/4.Obscure.nes</option>
+      <option value="nes-test-roms/nes15-1.0.0/nes15-NTSC.nes">nes-test-roms/nes15-1.0.0/nes15-NTSC.nes</option>
+      <option value="nes-test-roms/nes15-1.0.0/nes15-PAL.nes">nes-test-roms/nes15-1.0.0/nes15-PAL.nes</option>
+      <option value="nes-test-roms/ppu_open_bus/ppu_open_bus.nes">nes-test-roms/ppu_open_bus/ppu_open_bus.nes</option>
+      <option value="nes-test-roms/mmc3_test/4-scanline_timing.nes">nes-test-roms/mmc3_test/4-scanline_timing.nes</option>
+      <option value="nes-test-roms/mmc3_test/1-clocking.nes">nes-test-roms/mmc3_test/1-clocking.nes</option>
+      <option value="nes-test-roms/mmc3_test/5-MMC3.nes">nes-test-roms/mmc3_test/5-MMC3.nes</option>
+      <option value="nes-test-roms/mmc3_test/6-MMC6.nes">nes-test-roms/mmc3_test/6-MMC6.nes</option>
+      <option value="nes-test-roms/mmc3_test/3-A12_clocking.nes">nes-test-roms/mmc3_test/3-A12_clocking.nes</option>
+      <option value="nes-test-roms/mmc3_test/2-details.nes">nes-test-roms/mmc3_test/2-details.nes</option>
+      <option value="nes-test-roms/mmc5test_v2/mmc5test.nes">nes-test-roms/mmc5test_v2/mmc5test.nes</option>
+      <option value="nes-test-roms/MMC1_A12/mmc1_a12.nes">nes-test-roms/MMC1_A12/mmc1_a12.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/2.Details.nes">nes-test-roms/mmc3_irq_tests/2.Details.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/3.A12_clocking.nes">nes-test-roms/mmc3_irq_tests/3.A12_clocking.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/5.MMC3_rev_A.nes">nes-test-roms/mmc3_irq_tests/5.MMC3_rev_A.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/1.Clocking.nes">nes-test-roms/mmc3_irq_tests/1.Clocking.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/4.Scanline_timing.nes">nes-test-roms/mmc3_irq_tests/4.Scanline_timing.nes</option>
+      <option value="nes-test-roms/mmc3_irq_tests/6.MMC3_rev_B.nes">nes-test-roms/mmc3_irq_tests/6.MMC3_rev_B.nes</option>
+      <option value="nes-test-roms/240pee/240pee-bnrom.nes">nes-test-roms/240pee/240pee-bnrom.nes</option>
+      <option value="nes-test-roms/240pee/240pee.nes">nes-test-roms/240pee/240pee.nes</option>
+      <option value="nes-test-roms/tvpassfail/tv.nes">nes-test-roms/tvpassfail/tv.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/02-immediate.nes">nes-test-roms/nes_instr_test/rom_singles/02-immediate.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/03-zero_page.nes">nes-test-roms/nes_instr_test/rom_singles/03-zero_page.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/04-zp_xy.nes">nes-test-roms/nes_instr_test/rom_singles/04-zp_xy.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/11-special.nes">nes-test-roms/nes_instr_test/rom_singles/11-special.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/06-abs_xy.nes">nes-test-roms/nes_instr_test/rom_singles/06-abs_xy.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/10-stack.nes">nes-test-roms/nes_instr_test/rom_singles/10-stack.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/05-absolute.nes">nes-test-roms/nes_instr_test/rom_singles/05-absolute.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/08-ind_y.nes">nes-test-roms/nes_instr_test/rom_singles/08-ind_y.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/01-implied.nes">nes-test-roms/nes_instr_test/rom_singles/01-implied.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/09-branches.nes">nes-test-roms/nes_instr_test/rom_singles/09-branches.nes</option>
+      <option value="nes-test-roms/nes_instr_test/rom_singles/07-ind_x.nes">nes-test-roms/nes_instr_test/rom_singles/07-ind_x.nes</option>
+      <option value="nes-test-roms/cpu_dummy_writes/cpu_dummy_writes_ppumem.nes">nes-test-roms/cpu_dummy_writes/cpu_dummy_writes_ppumem.nes</option>
+      <option value="nes-test-roms/cpu_dummy_writes/cpu_dummy_writes_oam.nes">nes-test-roms/cpu_dummy_writes/cpu_dummy_writes_oam.nes</option>
+      <option value="nes-test-roms/apu_reset/4017_written.nes">nes-test-roms/apu_reset/4017_written.nes</option>
+      <option value="nes-test-roms/apu_reset/irq_flag_cleared.nes">nes-test-roms/apu_reset/irq_flag_cleared.nes</option>
+      <option value="nes-test-roms/apu_reset/works_immediately.nes">nes-test-roms/apu_reset/works_immediately.nes</option>
+      <option value="nes-test-roms/apu_reset/4017_timing.nes">nes-test-roms/apu_reset/4017_timing.nes</option>
+      <option value="nes-test-roms/apu_reset/4015_cleared.nes">nes-test-roms/apu_reset/4015_cleared.nes</option>
+      <option value="nes-test-roms/apu_reset/len_ctrs_enabled.nes">nes-test-roms/apu_reset/len_ctrs_enabled.nes</option>
+      <option value="nes-test-roms/full_palette/full_palette.nes">nes-test-roms/full_palette/full_palette.nes</option>
+      <option value="nes-test-roms/full_palette/flowing_palette.nes">nes-test-roms/full_palette/flowing_palette.nes</option>
+      <option value="nes-test-roms/full_palette/full_palette_smooth.nes">nes-test-roms/full_palette/full_palette_smooth.nes</option>
+      <option value="nes-test-roms/scrolltest/scroll.nes">nes-test-roms/scrolltest/scroll.nes</option>
+      <option value="nes-test-roms/ny2011/ny2011.nes">nes-test-roms/ny2011/ny2011.nes</option>
+      <option value="nes-test-roms/mmc5test/mmc5test.nes">nes-test-roms/mmc5test/mmc5test.nes</option>
+      <option value="nes-test-roms/instr_misc/rom_singles/03-dummy_reads.nes">nes-test-roms/instr_misc/rom_singles/03-dummy_reads.nes</option>
+      <option value="nes-test-roms/instr_misc/rom_singles/01-abs_x_wrap.nes">nes-test-roms/instr_misc/rom_singles/01-abs_x_wrap.nes</option>
+      <option value="nes-test-roms/instr_misc/rom_singles/04-dummy_reads_apu.nes">nes-test-roms/instr_misc/rom_singles/04-dummy_reads_apu.nes</option>
+      <option value="nes-test-roms/instr_misc/rom_singles/02-branch_wrap.nes">nes-test-roms/instr_misc/rom_singles/02-branch_wrap.nes</option>
+      <option value="nes-test-roms/instr_misc/instr_misc.nes">nes-test-roms/instr_misc/instr_misc.nes</option>
+      <option value="nes-test-roms/apu_test/apu_test.nes">nes-test-roms/apu_test/apu_test.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/5-len_timing.nes">nes-test-roms/apu_test/rom_singles/5-len_timing.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/8-dmc_rates.nes">nes-test-roms/apu_test/rom_singles/8-dmc_rates.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/1-len_ctr.nes">nes-test-roms/apu_test/rom_singles/1-len_ctr.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/3-irq_flag.nes">nes-test-roms/apu_test/rom_singles/3-irq_flag.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/4-jitter.nes">nes-test-roms/apu_test/rom_singles/4-jitter.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/2-len_table.nes">nes-test-roms/apu_test/rom_singles/2-len_table.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/7-dmc_basics.nes">nes-test-roms/apu_test/rom_singles/7-dmc_basics.nes</option>
+      <option value="nes-test-roms/apu_test/rom_singles/6-irq_flag_timing.nes">nes-test-roms/apu_test/rom_singles/6-irq_flag_timing.nes</option>
+      <option value="nes-test-roms/branch_timing_tests/2.Backward_Branch.nes">nes-test-roms/branch_timing_tests/2.Backward_Branch.nes</option>
+      <option value="nes-test-roms/branch_timing_tests/1.Branch_Basics.nes">nes-test-roms/branch_timing_tests/1.Branch_Basics.nes</option>
+      <option value="nes-test-roms/branch_timing_tests/3.Forward_Branch.nes">nes-test-roms/branch_timing_tests/3.Forward_Branch.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/08-nmi_off_timing.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/08-nmi_off_timing.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/06-suppression.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/06-suppression.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/01-vbl_basics.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/01-vbl_basics.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/09-even_odd_frames.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/09-even_odd_frames.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/05-nmi_timing.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/05-nmi_timing.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/02-vbl_set_time.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/02-vbl_set_time.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/07-nmi_on_timing.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/07-nmi_on_timing.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/04-nmi_control.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/04-nmi_control.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/10-even_odd_timing.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/10-even_odd_timing.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/rom_singles/03-vbl_clear_time.nes">nes-test-roms/ppu_vbl_nmi/rom_singles/03-vbl_clear_time.nes</option>
+      <option value="nes-test-roms/ppu_vbl_nmi/ppu_vbl_nmi.nes">nes-test-roms/ppu_vbl_nmi/ppu_vbl_nmi.nes</option>
+      <option value="nes-test-roms/scanline/scanline.nes">nes-test-roms/scanline/scanline.nes</option>
+      <option value="nes-test-roms/m22chrbankingtest/0-127.nes">nes-test-roms/m22chrbankingtest/0-127.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/4-scanline_timing.nes">nes-test-roms/mmc3_test_2/rom_singles/4-scanline_timing.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/1-clocking.nes">nes-test-roms/mmc3_test_2/rom_singles/1-clocking.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/5-MMC3.nes">nes-test-roms/mmc3_test_2/rom_singles/5-MMC3.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/3-A12_clocking.nes">nes-test-roms/mmc3_test_2/rom_singles/3-A12_clocking.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/6-MMC3_alt.nes">nes-test-roms/mmc3_test_2/rom_singles/6-MMC3_alt.nes</option>
+      <option value="nes-test-roms/mmc3_test_2/rom_singles/2-details.nes">nes-test-roms/mmc3_test_2/rom_singles/2-details.nes</option>
+      <option value="nes-test-roms/oam_read/oam_read.nes">nes-test-roms/oam_read/oam_read.nes</option>
+      <option value="nes-test-roms/dmc_dma_during_read4/read_write_2007.nes">nes-test-roms/dmc_dma_during_read4/read_write_2007.nes</option>
+      <option value="nes-test-roms/dmc_dma_during_read4/dma_4016_read.nes">nes-test-roms/dmc_dma_during_read4/dma_4016_read.nes</option>
+      <option value="nes-test-roms/dmc_dma_during_read4/dma_2007_read.nes">nes-test-roms/dmc_dma_during_read4/dma_2007_read.nes</option>
+      <option value="nes-test-roms/dmc_dma_during_read4/double_2007_read.nes">nes-test-roms/dmc_dma_during_read4/double_2007_read.nes</option>
+      <option value="nes-test-roms/dmc_dma_during_read4/dma_2007_write.nes">nes-test-roms/dmc_dma_during_read4/dma_2007_write.nes</option>
+      <option value="nes-test-roms/sprdma_and_dmc_dma/sprdma_and_dmc_dma_512.nes">nes-test-roms/sprdma_and_dmc_dma/sprdma_and_dmc_dma_512.nes</option>
+      <option value="nes-test-roms/sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes">nes-test-roms/sprdma_and_dmc_dma/sprdma_and_dmc_dma.nes</option>
+      <option value="nes-test-roms/tutor/tutor.nes">nes-test-roms/tutor/tutor.nes</option>
+      <option value="nes-test-roms/blargg_ppu_tests_2005.09.15b/palette_ram.nes">nes-test-roms/blargg_ppu_tests_2005.09.15b/palette_ram.nes</option>
+      <option value="nes-test-roms/blargg_ppu_tests_2005.09.15b/sprite_ram.nes">nes-test-roms/blargg_ppu_tests_2005.09.15b/sprite_ram.nes</option>
+      <option value="nes-test-roms/blargg_ppu_tests_2005.09.15b/power_up_palette.nes">nes-test-roms/blargg_ppu_tests_2005.09.15b/power_up_palette.nes</option>
+      <option value="nes-test-roms/blargg_ppu_tests_2005.09.15b/vram_access.nes">nes-test-roms/blargg_ppu_tests_2005.09.15b/vram_access.nes</option>
+      <option value="nes-test-roms/blargg_ppu_tests_2005.09.15b/vbl_clear_time.nes">nes-test-roms/blargg_ppu_tests_2005.09.15b/vbl_clear_time.nes</option>
+      <option value="nes-test-roms/read_joy3/thorough_test.nes">nes-test-roms/read_joy3/thorough_test.nes</option>
+      <option value="nes-test-roms/read_joy3/test_buttons.nes">nes-test-roms/read_joy3/test_buttons.nes</option>
+      <option value="nes-test-roms/read_joy3/count_errors_fast.nes">nes-test-roms/read_joy3/count_errors_fast.nes</option>
+      <option value="nes-test-roms/read_joy3/count_errors.nes">nes-test-roms/read_joy3/count_errors.nes</option>
+      <option value="nes-test-roms/dmc_tests/status.nes">nes-test-roms/dmc_tests/status.nes</option>
+      <option value="nes-test-roms/dmc_tests/latency.nes">nes-test-roms/dmc_tests/latency.nes</option>
+      <option value="nes-test-roms/dmc_tests/buffer_retained.nes">nes-test-roms/dmc_tests/buffer_retained.nes</option>
+      <option value="nes-test-roms/dmc_tests/status_irq.nes">nes-test-roms/dmc_tests/status_irq.nes</option>
+      <option value="nes-test-roms/volume_tests/volumes.nes">nes-test-roms/volume_tests/volumes.nes</option>
+      <option value="nes-test-roms/nrom368/test1.nes">nes-test-roms/nrom368/test1.nes</option>
+      <option value="nes-test-roms/nrom368/fail368.nes">nes-test-roms/nrom368/fail368.nes</option>
+      <option value="nes-test-roms/ppu_read_buffer/test_ppu_read_buffer.nes">nes-test-roms/ppu_read_buffer/test_ppu_read_buffer.nes</option>
+      <option value="nes-test-roms/cpu_dummy_reads/cpu_dummy_reads.nes">nes-test-roms/cpu_dummy_reads/cpu_dummy_reads.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/6.nmi_disable.nes">nes-test-roms/vbl_nmi_timing/6.nmi_disable.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/2.vbl_timing.nes">nes-test-roms/vbl_nmi_timing/2.vbl_timing.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/1.frame_basics.nes">nes-test-roms/vbl_nmi_timing/1.frame_basics.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/4.vbl_clear_timing.nes">nes-test-roms/vbl_nmi_timing/4.vbl_clear_timing.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/7.nmi_timing.nes">nes-test-roms/vbl_nmi_timing/7.nmi_timing.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/5.nmi_suppression.nes">nes-test-roms/vbl_nmi_timing/5.nmi_suppression.nes</option>
+      <option value="nes-test-roms/vbl_nmi_timing/3.even_odd_frames.nes">nes-test-roms/vbl_nmi_timing/3.even_odd_frames.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/02.alignment.nes">nes-test-roms/sprite_hit_tests_2005.10.05/02.alignment.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/04.flip.nes">nes-test-roms/sprite_hit_tests_2005.10.05/04.flip.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/07.screen_bottom.nes">nes-test-roms/sprite_hit_tests_2005.10.05/07.screen_bottom.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/06.right_edge.nes">nes-test-roms/sprite_hit_tests_2005.10.05/06.right_edge.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/08.double_height.nes">nes-test-roms/sprite_hit_tests_2005.10.05/08.double_height.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/05.left_clip.nes">nes-test-roms/sprite_hit_tests_2005.10.05/05.left_clip.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/09.timing_basics.nes">nes-test-roms/sprite_hit_tests_2005.10.05/09.timing_basics.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/01.basics.nes">nes-test-roms/sprite_hit_tests_2005.10.05/01.basics.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/10.timing_order.nes">nes-test-roms/sprite_hit_tests_2005.10.05/10.timing_order.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/03.corners.nes">nes-test-roms/sprite_hit_tests_2005.10.05/03.corners.nes</option>
+      <option value="nes-test-roms/sprite_hit_tests_2005.10.05/11.edge_timing.nes">nes-test-roms/sprite_hit_tests_2005.10.05/11.edge_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/08.irq_timing.nes">nes-test-roms/blargg_apu_2005.07.30/08.irq_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/09.reset_timing.nes">nes-test-roms/blargg_apu_2005.07.30/09.reset_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/04.clock_jitter.nes">nes-test-roms/blargg_apu_2005.07.30/04.clock_jitter.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/06.len_timing_mode1.nes">nes-test-roms/blargg_apu_2005.07.30/06.len_timing_mode1.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/10.len_halt_timing.nes">nes-test-roms/blargg_apu_2005.07.30/10.len_halt_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/01.len_ctr.nes">nes-test-roms/blargg_apu_2005.07.30/01.len_ctr.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/07.irq_flag_timing.nes">nes-test-roms/blargg_apu_2005.07.30/07.irq_flag_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/05.len_timing_mode0.nes">nes-test-roms/blargg_apu_2005.07.30/05.len_timing_mode0.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/11.len_reload_timing.nes">nes-test-roms/blargg_apu_2005.07.30/11.len_reload_timing.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/02.len_table.nes">nes-test-roms/blargg_apu_2005.07.30/02.len_table.nes</option>
+      <option value="nes-test-roms/blargg_apu_2005.07.30/03.irq_flag.nes">nes-test-roms/blargg_apu_2005.07.30/03.irq_flag.nes</option>
+      <option value="nes-test-roms/window5/colorwin_pal.nes">nes-test-roms/window5/colorwin_pal.nes</option>
+      <option value="nes-test-roms/window5/colorwin_ntsc.nes">nes-test-roms/window5/colorwin_ntsc.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/08.irq_timing.nes">nes-test-roms/pal_apu_tests/08.irq_timing.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/04.clock_jitter.nes">nes-test-roms/pal_apu_tests/04.clock_jitter.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/06.len_timing_mode1.nes">nes-test-roms/pal_apu_tests/06.len_timing_mode1.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/10.len_halt_timing.nes">nes-test-roms/pal_apu_tests/10.len_halt_timing.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/01.len_ctr.nes">nes-test-roms/pal_apu_tests/01.len_ctr.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/07.irq_flag_timing.nes">nes-test-roms/pal_apu_tests/07.irq_flag_timing.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/05.len_timing_mode0.nes">nes-test-roms/pal_apu_tests/05.len_timing_mode0.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/11.len_reload_timing.nes">nes-test-roms/pal_apu_tests/11.len_reload_timing.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/02.len_table.nes">nes-test-roms/pal_apu_tests/02.len_table.nes</option>
+      <option value="nes-test-roms/pal_apu_tests/03.irq_flag.nes">nes-test-roms/pal_apu_tests/03.irq_flag.nes</option>
+      <option value="nes-test-roms/exram/mmc5exram.nes">nes-test-roms/exram/mmc5exram.nes</option>
+      <option value="nes-test-roms/stomper/smwstomp.nes">nes-test-roms/stomper/smwstomp.nes</option>
+      <option value="nes-test-roms/scanline-a1/scanline.nes">nes-test-roms/scanline-a1/scanline.nes</option>
+      <option value="nes-test-roms/PaddleTest3/PaddleTest.nes">nes-test-roms/PaddleTest3/PaddleTest.nes</option>
+    </select>
+
+    <button onclick="load()">Start</button>
     <script type="module">
       import init, { WasmNES } from "/pkg/rust_nes.js";
+      await init();
+      let wasmNES;
 
       const canvas = document.getElementById("game");
       const ctx = canvas.getContext("2d");
 
       window.render_canvas = function (data) {
-        const imageData = new ImageData(
-          new Uint8ClampedArray(data),
-          256,
-          240
-        );
+        const imageData = new ImageData(new Uint8ClampedArray(data), 256, 240);
         ctx.putImageData(imageData, 0, 0);
       };
 
@@ -41,38 +326,45 @@
           case 39: // Right => Right
             return 7;
           default:
-            return null
+            return null;
         }
       }
+      document.addEventListener("keydown", (event) => {
+        const keyIndex = getKeyIndex(event.keyCode);
+        if (keyIndex == null || wasmNES == null) {
+          return;
+        }
+        wasmNES.key_down(keyIndex);
+      });
+      document.addEventListener("keyup", (event) => {
+        const keyIndex = getKeyIndex(event.keyCode);
+        if (keyIndex == null || wasmNES == null) {
+          return;
+        }
+        wasmNES.key_up(keyIndex);
+      });
 
-      async function main() {
-        const response = await fetch("/nes/rustynes/nestest.nes");
+      function loop() {
+        wasmNES.frame();
+        requestAnimationFrame(loop);
+      }
+
+      window.load = async function load() {
+        document.activeElement.blur();
+        const selectElement = document.getElementById("cartridge");
+        const selectedValue =
+          selectElement.options[selectElement.selectedIndex].value;
+
+        const response = await fetch(`/nes/${selectedValue}`);
         const arrayBuffer = await response.arrayBuffer();
         const romData = new Uint8Array(arrayBuffer);
 
-        await init();
-        const wasmNES = WasmNES.new(romData);
-        document.addEventListener('keydown', event => {
-          const keyIndex = getKeyIndex(event.keyCode);
-          if (keyIndex == null) {
-            return;
-          }
-          wasmNES.key_down(keyIndex);
-        });
-        document.addEventListener('keyup', event => {
-          const keyIndex = getKeyIndex(event.keyCode);
-          if (keyIndex == null) {
-            return;
-          }
-          wasmNES.key_up(keyIndex);
-        });
-        function loop() {
-          wasmNES.frame();
+        const notStarted = wasmNES == null;
+        wasmNES = WasmNES.new(romData);
+        if (notStarted) {
           requestAnimationFrame(loop);
         }
-        requestAnimationFrame(loop);
-      }
-      main();
+      };
     </script>
   </body>
 </html>

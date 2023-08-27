@@ -1,13 +1,15 @@
 use crate::{Byte, Word};
 
+use super::SCREEN_WIDTH;
+
 #[derive(Debug)]
 pub struct PPURegisters {
-    ctrl: u8,
-    mask: u8,
-    status: u8,
-    oam_address: u8,
-    scroll_x: u8,
-    scroll_y: u8,
+    ctrl: Byte,
+    mask: Byte,
+    status: Byte,
+    oam_address: Byte,
+    scroll_x: Byte,
+    scroll_y: Byte,
     address: Word,
 
     is_first_scroll_write: bool,
@@ -45,11 +47,14 @@ impl PPURegisters {
     }
     pub fn write_scroll(&mut self, data: Byte) {
         if self.is_first_scroll_write {
-            self.scroll_y = data;
-        } else {
             self.scroll_x = data;
+        } else {
+            self.scroll_y = data;
         }
         self.is_first_scroll_write = !self.is_first_scroll_write;
+    }
+    pub fn clear_scroll_latch(&mut self) {
+        self.is_first_scroll_write = true;
     }
     pub fn write_address(&mut self, data: Byte) {
         if self.is_first_address_write {
@@ -59,11 +64,17 @@ impl PPURegisters {
         }
         self.is_first_address_write = !self.is_first_address_write;
     }
+    pub fn clear_address_latch(&mut self) {
+        self.is_first_address_write = true;
+    }
 
-    pub fn get_oam_address(&self) -> u8 {
+    pub fn oam_address(&self) -> Byte {
         self.oam_address
     }
-    pub fn get_address(&self) -> Word {
+    pub fn increment_oam_address(&mut self) {
+        self.oam_address += 1;
+    }
+    pub fn address(&self) -> Word {
         self.address
     }
     pub fn increment_address(&mut self) {
@@ -131,10 +142,16 @@ impl PPURegisters {
         self.status &= 0b01111111;
     }
 
-    //     pub fn scroll_tile_x(&self) -> u8 {
-    //         (self.scroll_x + (self.name_table_id() % 2) * 256) / 8
-    //     }
-    //     pub fn scroll_tile_y(&self) -> u8 {
-    //         (self.scroll_y + (self.name_table_id() / 2) * 240) / 8
-    //     }
+    pub fn scroll_x(&self) -> Byte {
+        self.scroll_x
+    }
+    pub fn scroll_y(&self) -> Byte {
+        self.scroll_y
+    }
+    pub fn real_scroll_x(&self) -> u16 {
+        self.scroll_x as u16 + (self.name_table_id() as u16 % 2 * SCREEN_WIDTH)
+    }
+    pub fn real_scroll_y(&self) -> u16 {
+        self.scroll_y as u16 + (self.name_table_id() as u16 / 2 * SCREEN_WIDTH)
+    }
 }

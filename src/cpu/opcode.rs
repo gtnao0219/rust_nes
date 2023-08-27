@@ -1,4 +1,4 @@
-use crate::{Byte, Cycle, log};
+use crate::{log, Byte, Cycle};
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Addressing {
@@ -82,6 +82,7 @@ pub enum OpcodeBaseName {
     BRK,
     NOP,
 
+    // unofficial opcodes
     NOPD,
     NOPI,
     LAX,
@@ -1319,8 +1320,8 @@ pub fn get_opcode(byte: Byte) -> Opcode {
             cycle: 8,
         },
         _ => {
-            log(&format!("Unknown opcode: {:X}", byte));
-            panic!("Unknown opcode: {:X}", byte);
+            log(&format!("Unknown opcode: {:02X}", byte));
+            panic!();
         }
     }
 }

@@ -1,20 +1,22 @@
-pub type PaletteId = u8;
-pub type PaletteData = [u8; 0x20];
-pub type ColorId = u8;
+use crate::log;
 
 #[derive(Debug, Default)]
 pub struct Palette {
-    data: PaletteData,
+    data: [u8; 32],
 }
 
 impl Palette {
-    pub fn read(&self, addr: u8) -> ColorId {
-        self.data[Self::get_addr(addr) as usize]
+    pub fn read(&self, addr: u8) -> u8 {
+        self.data[Self::real_addr(addr) as usize]
     }
-    pub fn write(&mut self, addr: u8, data: ColorId) {
-        self.data[Self::get_addr(addr) as usize] = data;
+    pub fn write(&mut self, addr: u8, data: u8) -> () {
+        self.data[Self::real_addr(addr) as usize] = data;
     }
-    fn get_addr(addr: u8) -> u8 {
+    fn real_addr(addr: u8) -> u8 {
+        if addr >= 0x20 {
+            log(&format!("Palette out of range: {:02X}", addr));
+            panic!();
+        }
         if Self::is_background_mirror(addr) {
             0x00
         } else if Self::is_sprite_mirror(addr) {
@@ -30,4 +32,3 @@ impl Palette {
         addr == 0x10 || addr == 0x14 || addr == 0x18 || addr == 0x1c
     }
 }
-

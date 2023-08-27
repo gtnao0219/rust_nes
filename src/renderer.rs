@@ -1,5 +1,5 @@
 use crate::{
-    ppu::{BackgroundCell, RenderingData, SCREEN_HEIGHT, SCREEN_WIDTH, Background, Sprite},
+    ppu::{Background, BackgroundCell, RenderingData, Sprite, SCREEN_HEIGHT, SCREEN_WIDTH},
     render_canvas,
 };
 
@@ -9,7 +9,7 @@ pub struct Renderer {
 impl Renderer {
     pub fn new() -> Self {
         Renderer {
-            result: [0; SCREEN_WIDTH as usize * SCREEN_HEIGHT as usize * 4],
+            result: [0xFF; SCREEN_WIDTH as usize * SCREEN_HEIGHT as usize * 4],
         }
     }
     pub fn render(&mut self, rendering_data: RenderingData) {
@@ -18,35 +18,32 @@ impl Renderer {
         render_canvas(&self.result);
     }
     fn set_background(&mut self, background: &Background) {
-        for tile_y in 0..30 {
-            for tile_x in 0..32 {
-                let cell = &background.lines[tile_y as usize][tile_x as usize];
-                self.set_cell(cell, tile_x, tile_y, 0, 0);
+        for tile_row in 0..30 {
+            for tile_column in 0..32 {
+                let cell = &background.lines[tile_row][tile_column];
+                self.set_cell(cell, tile_row, tile_column);
             }
         }
     }
-    fn set_cell(
-        &mut self,
-        cell: &BackgroundCell,
-        tile_x: u16,
-        tile_y: u16,
-        scroll_x: u16,
-        scroll_y: u16,
-    ) {
-        let offset_x = scroll_x % 8;
-        let offset_y = scroll_y % 8;
-        for i in 0..8 {
-            for j in 0..8 {
-                let y = tile_y as isize * 8 + i - offset_y as isize;
-                let x = tile_x as isize * 8 + j - offset_x as isize;
-                let color_id = cell.palette_value[cell.tile.data[i as usize][j as usize] as usize];
-                let color = COLORS[color_id as usize];
+    fn set_cell(&mut self, cell: &BackgroundCell, tile_row: usize, tile_column: usize) {
+        if !cell.is_visible {
+            return;
+        }
+        for offset_y in 0..8 {
+            for offset_x in 0..8 {
+                let y = tile_row as isize * 8 + offset_y - (cell.scroll_y % 8) as isize;
+                let x = tile_column as isize * 8 + offset_x - (cell.scroll_x % 8) as isize;
                 if 0 <= x && x < 256 && 0 <= y && y < 240 {
+                    let palette_offset = cell.tile.palette_offset(offset_x as u8, offset_y as u8);
+                    let color_id = cell.palette_value[palette_offset as usize];
+                    let color = COLORS[color_id as usize];
                     let index = (y * 256 + x) * 4;
                     self.result[index as usize] = color.0;
                     self.result[index as usize + 1] = color.1;
                     self.result[index as usize + 2] = color.2;
-                    self.result[index as usize + 3] = 255;
+                    if x < 8 {
+                        self.result[index as usize + 3] = 0;
+                    }
                 }
             }
         }
@@ -57,16 +54,39 @@ impl Renderer {
         }
     }
     fn set_sprite(&mut self, sprite: &Sprite) {
-        for i in 0..8 {
-            for j in 0..8 {
-                let y = sprite.y as isize + i;
-                let x = sprite.x as isize + j;
-                let color_id = sprite.attribute.palette_value[sprite.tile.data[i as usize][j as usize] as usize];
+        if sprite.attribute.is_low_priority {
+            return;
+        }
+        for original_offset_y in 0..8 {
+            for original_offset_x in 0..8 {
+                let offset_y = if sprite.attribute.is_flip_vertical {
+                    7 - original_offset_y
+                } else {
+                    original_offset_y
+                };
+                let offset_x = if sprite.attribute.is_flip_horizontal {
+                    7 - original_offset_x
+                } else {
+                    original_offset_x
+                };
+                let y = sprite.y as isize + original_offset_y;
+                let x = sprite.x as isize + original_offset_x;
+                if y < 0 || 240 <= y || x < 0 || 256 <= x {
+                    continue;
+                }
+                let palette_offset = sprite.tile.palette_offset(offset_x as u8, offset_y as u8);
+                let color_id = sprite.attribute.palette_value[palette_offset as usize];
                 let color = COLORS[color_id as usize];
                 let index = (y * 256 + x) * 4;
+                if palette_offset == 0 {
+                    continue;
+                }
                 self.result[index as usize] = color.0;
                 self.result[index as usize + 1] = color.1;
                 self.result[index as usize + 2] = color.2;
+                if x < 8 {
+                    self.result[index as usize + 3] = 0;
+                }
             }
         }
     }

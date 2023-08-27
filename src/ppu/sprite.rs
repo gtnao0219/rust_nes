@@ -1,4 +1,4 @@
-use super::{oam::OAMEntry, tile::Tile, PPU};
+use super::{tile::Tile, PPU};
 
 #[derive(Debug, Clone)]
 pub struct Sprite {
@@ -16,9 +16,9 @@ pub struct SpriteAttribute {
 }
 
 impl Sprite {
-    pub fn new(ppu: &PPU, oam_entry: OAMEntry) -> Self {
+    pub fn new(ppu: &PPU, oam_entry: [u8; 4]) -> Self {
         let tile_id = oam_entry[1];
-        let tile = ppu.get_tile(tile_id, true);
+        let tile = ppu.fetch_tile(tile_id, true);
         Sprite {
             x: oam_entry[3],
             y: oam_entry[0],
@@ -30,12 +30,12 @@ impl Sprite {
 
 impl SpriteAttribute {
     pub fn new(ppu: &PPU, data: u8) -> Self {
-        let palette_id = data & 0x03;
+        let palette_id = data & 0b11;
         SpriteAttribute {
-            palette_value: ppu.get_palette_value(palette_id, true),
-            is_low_priority: data & 0x20 != 0,
-            is_flip_horizontal: data & 0x40 != 0,
-            is_flip_vertical: data & 0x80 != 0,
+            palette_value: ppu.fetch_palette_value(palette_id, true),
+            is_low_priority: data & 0b10_0000 != 0,
+            is_flip_horizontal: data & 0b100_0000 != 0,
+            is_flip_vertical: data & 0b1000_0000 != 0,
         }
     }
 }

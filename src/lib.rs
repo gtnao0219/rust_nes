@@ -1,4 +1,5 @@
 extern crate wasm_bindgen;
+
 use wasm_bindgen::prelude::*;
 use web_sys::console::log_1;
 
@@ -30,6 +31,9 @@ pub struct WasmNES(nes::NES);
 impl WasmNES {
     pub fn new(rom_data: &[u8]) -> Self {
         WasmNES(nes::NES::new(rom_data))
+    }
+    pub fn load(&mut self, rom_data: &[u8]) {
+        self.0 = nes::NES::new(rom_data);
     }
     pub fn frame(&mut self) {
         self.0.frame();

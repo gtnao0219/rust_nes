@@ -2,13 +2,14 @@ use crate::{Byte, Word};
 
 #[derive(Debug)]
 pub struct CPURegister {
-    a: u8,
-    x: u8,
-    y: u8,
-    s: u8,
+    a: Byte,
+    x: Byte,
+    y: Byte,
+    s: Byte,
     p: CPUStatusRegister,
-    pc: u16,
+    pc: Word,
 }
+
 #[derive(Debug)]
 pub struct CPUStatusRegister {
     c: bool,
@@ -20,6 +21,8 @@ pub struct CPUStatusRegister {
     v: bool,
     n: bool,
 }
+
+// TODO: default check
 impl Default for CPURegister {
     fn default() -> Self {
         Self {
@@ -32,6 +35,7 @@ impl Default for CPURegister {
         }
     }
 }
+
 impl Default for CPUStatusRegister {
     fn default() -> Self {
         Self {
@@ -73,10 +77,10 @@ impl CPURegister {
         self.s = s;
     }
     pub fn increment_s(&mut self) {
-        self.s += 1;
+        self.s = self.s.wrapping_add(1);
     }
     pub fn decrement_s(&mut self) {
-        self.s -= 1;
+        self.s = self.s.wrapping_sub(1);
     }
     pub fn get_pc(&self) -> Word {
         self.pc
@@ -85,13 +89,13 @@ impl CPURegister {
         self.pc = pc;
     }
     pub fn increment_pc_byte(&mut self) {
-        self.pc += 1;
+        self.pc = self.pc.wrapping_add(1);
     }
     pub fn increment_pc_word(&mut self) {
-        self.pc += 2;
+        self.pc = self.pc.wrapping_add(2);
     }
     pub fn decrement_pc_byte(&mut self) {
-        self.pc -= 1;
+        self.pc = self.pc.wrapping_sub(1);
     }
     pub fn stack_address(&self) -> Word {
         0x0100 | self.s as Word
@@ -208,6 +212,7 @@ impl CPURegister {
         self.p.n = true;
     }
 
+    // TODO:
     pub fn add_a(&mut self, value: Byte) {
         let sum = self.a as u16 + value as u16 + self.p.c as u16;
         let overflow = (self.a ^ value) & 0x80 == 0 && (self.a ^ sum as u8) & 0x80 != 0;
@@ -271,7 +276,6 @@ impl CPURegister {
         self.p.c = diff >= 0;
         self.set_zn_by(diff as u8);
     }
-
     pub fn set_zn_by(&mut self, value: Byte) {
         self.p.z = value == 0;
         self.p.n = (value & 0x80) != 0;
