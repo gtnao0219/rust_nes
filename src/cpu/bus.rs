@@ -47,10 +47,10 @@ impl CPUBus {
                 0x00
             }
             0x4000..=0x401F => {
-                log(&format!(
-                    "APU registers are not implemented yet: {:04X}",
-                    address
-                ));
+                // log(&format!(
+                //     "APU registers are not implemented yet: {:04X}",
+                //     address
+                // ));
                 0x00
             }
             0x4020..=0x5FFF => {
@@ -84,10 +84,10 @@ impl CPUBus {
                 // log("Write to controller 2 is not implemented yet");
             }
             0x4000..=0x401F => {
-                log(&format!(
-                    "APU registers are not implemented yet: {:04X}",
-                    address
-                ));
+                // log(&format!(
+                //     "APU registers are not implemented yet: {:04X}",
+                //     address
+                // ));
             }
             0x4020..=0x5FFF => {
                 log(&format!(
