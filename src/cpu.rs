@@ -46,7 +46,7 @@ impl<P: PPU> CPU<P> {
         let opcode = opcode::get_opcode(opcode_byte);
         let decode_result = decoder::decode(self, &opcode);
 
-        executor::execute(self, &opcode, &decode_result.operand);
+        executor::execute(self, &opcode, decode_result.operand);
         opcode.cycle + if decode_result.page_crossed { 1 } else { 0 }
     }
 
