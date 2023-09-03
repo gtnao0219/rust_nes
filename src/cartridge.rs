@@ -1,8 +1,8 @@
-use crate::{log, rom::ROM};
+use crate::rom::ROM;
 
-const HEADER_SIZE: usize = 0x10;
-const PROGRAM_ROM_UNIT_SIZE: usize = 0x4000;
-const CHARACTER_ROM_UNIT_SIZE: usize = 0x2000;
+const HEADER_SIZE: usize = 0x0010;
+const PROGRAM_ROM_UNIT_SIZE: usize = 0x4000; // 16KB
+const CHARACTER_ROM_UNIT_SIZE: usize = 0x2000; // 8KB
 
 pub struct Cartridge {
     pub program_rom: ROM,
@@ -15,14 +15,6 @@ impl Cartridge {
         let program_rom_size = data[4] as usize * PROGRAM_ROM_UNIT_SIZE;
         let character_rom_size = data[5] as usize * CHARACTER_ROM_UNIT_SIZE;
         let is_horizontal_mirroring = data[6] & 0b0000_0001 == 0;
-        let mapper = ((data[6] & 0b1111_0000) >> 4) | (data[7] & 0b1111_0000);
-        log(&format!("program_rom_size: {:?}", program_rom_size));
-        log(&format!("character_rom_size: {:?}", character_rom_size));
-        log(&format!(
-            "is_horizontal_mirroring: {:?}",
-            is_horizontal_mirroring
-        ));
-        log(&format!("mapper: {:?}", mapper));
 
         let program_rom_start = HEADER_SIZE;
         let program_rom_end = program_rom_start + program_rom_size;
@@ -39,5 +31,36 @@ impl Cartridge {
             character_rom,
             is_horizontal_mirroring,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let header_data = vec![
+            0x4e, 0x45, 0x53, 0x1a, // NES^Z
+            0x02, 0x01, // page sizes
+            0x01, // vertical mirroring
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // others
+        ];
+        let program_rom_data = vec![0x00; 0x8000];
+        let character_rom_data = vec![0x00; 0x2000];
+        let mut data = [
+            &header_data[..],
+            &program_rom_data[..],
+            &character_rom_data[..],
+        ]
+        .concat();
+        let cartridge = Cartridge::new(&data);
+        assert_eq!(cartridge.program_rom.size(), 0x8000);
+        assert_eq!(cartridge.character_rom.size(), 0x2000);
+        assert_eq!(cartridge.is_horizontal_mirroring, false);
+
+        data[6] = 0x00;
+        let cartridge = Cartridge::new(&data);
+        assert_eq!(cartridge.is_horizontal_mirroring, true);
     }
 }

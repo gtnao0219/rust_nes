@@ -31,3 +31,27 @@ impl Interrupt {
         self.irq = false;
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_interrupt() {
+        let mut interrupt = Interrupt::default();
+        assert_eq!(interrupt.is_nmi(), false);
+        assert_eq!(interrupt.is_irq(), false);
+        interrupt.set_nmi();
+        assert_eq!(interrupt.is_nmi(), true);
+        assert_eq!(interrupt.is_irq(), false);
+        interrupt.clear_nmi();
+        assert_eq!(interrupt.is_nmi(), false);
+        assert_eq!(interrupt.is_irq(), false);
+        interrupt.set_irq();
+        assert_eq!(interrupt.is_nmi(), false);
+        assert_eq!(interrupt.is_irq(), true);
+        interrupt.clear_irq();
+        assert_eq!(interrupt.is_nmi(), false);
+        assert_eq!(interrupt.is_irq(), false);
+    }
+}
