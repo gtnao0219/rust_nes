@@ -1,4 +1,4 @@
-use crate::Word;
+use crate::{ppu::PPU, Word};
 
 use super::{
     opcode::{Addressing, Opcode},
@@ -11,7 +11,7 @@ pub struct DecodeResult {
     pub page_crossed: bool,
 }
 
-pub fn decode(cpu: &mut CPU, opcode: &Opcode) -> DecodeResult {
+pub fn decode<P: PPU>(cpu: &mut CPU<P>, opcode: &Opcode) -> DecodeResult {
     match opcode.addressing {
         Addressing::Implied | Addressing::Accumulator => DecodeResult {
             // dummy value

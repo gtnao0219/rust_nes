@@ -1,4 +1,4 @@
-use super::{tile::Tile, PPU};
+use super::{tile::Tile, PPUImpl};
 
 #[derive(Debug, Clone)]
 pub struct Sprite {
@@ -16,7 +16,7 @@ pub struct SpriteAttribute {
 }
 
 impl Sprite {
-    pub fn new(ppu: &PPU, oam_entry: [u8; 4]) -> Self {
+    pub fn new(ppu: &PPUImpl, oam_entry: [u8; 4]) -> Self {
         let tile_id = oam_entry[1];
         let tile = ppu.fetch_tile(tile_id, true);
         Sprite {
@@ -29,7 +29,7 @@ impl Sprite {
 }
 
 impl SpriteAttribute {
-    pub fn new(ppu: &PPU, data: u8) -> Self {
+    pub fn new(ppu: &PPUImpl, data: u8) -> Self {
         let palette_id = data & 0b11;
         SpriteAttribute {
             palette_value: ppu.fetch_palette_value(palette_id, true),

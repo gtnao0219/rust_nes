@@ -1,3 +1,6 @@
+#[cfg(test)]
+use mockall::automock;
+
 use std::{cell::RefCell, rc::Rc};
 
 use crate::{interrupt::Interrupt, log, ram::RAM, Byte, Cycle, Word};
@@ -30,7 +33,15 @@ pub struct RenderingData {
 pub const SCREEN_WIDTH: u16 = 256;
 pub const SCREEN_HEIGHT: u16 = 240;
 
-pub struct PPU {
+#[cfg_attr(test, automock)]
+pub trait PPU {
+    fn run(&mut self, cycle: Cycle) -> Option<RenderingData>;
+    fn read_register(&mut self, addr: Word) -> Byte;
+    fn write_register(&mut self, addr: Word, data: Byte) -> ();
+    fn transfer_sprite(&mut self, index: Byte, data: Byte) -> ();
+}
+
+pub struct PPUImpl {
     bus: PPUBus,
     registers: register::PPURegisters,
     oam: oam::OAM,
@@ -41,20 +52,8 @@ pub struct PPU {
     interrupt: Rc<RefCell<Interrupt>>,
 }
 
-impl PPU {
-    pub fn new(bus: PPUBus, interrupt: Rc<RefCell<Interrupt>>) -> Self {
-        PPU {
-            bus,
-            registers: register::PPURegisters::default(),
-            oam: oam::OAM::default(),
-            cycle: 0,
-            row: 0,
-            background: background::Background::default(),
-            sprites: Vec::new(),
-            interrupt,
-        }
-    }
-    pub fn run(&mut self, cycle: Cycle) -> Option<RenderingData> {
+impl PPU for PPUImpl {
+    fn run(&mut self, cycle: Cycle) -> Option<RenderingData> {
         self.cycle += cycle;
         if self.cycle >= 341 {
             self.cycle -= 341;
@@ -92,7 +91,7 @@ impl PPU {
         }
         None
     }
-    pub fn read_register(&mut self, addr: Word) -> Byte {
+    fn read_register(&mut self, addr: Word) -> Byte {
         match addr {
             0x2002 => {
                 let data = self.registers.read_status();
@@ -117,7 +116,7 @@ impl PPU {
             }
         }
     }
-    pub fn write_register(&mut self, addr: Word, data: Byte) -> () {
+    fn write_register(&mut self, addr: Word, data: Byte) -> () {
         match addr {
             0x2000 => self.registers.write_ctrl(data),
             0x2001 => self.registers.write_mask(data),
@@ -140,12 +139,26 @@ impl PPU {
             }
         }
     }
-    pub fn transfer_sprite(&mut self, index: Byte, data: Byte) -> () {
+    fn transfer_sprite(&mut self, index: Byte, data: Byte) -> () {
         let oam_address = self.registers.oam_address();
         self.oam
             .write(((oam_address as u16 + index as u16) % 0x100) as u8, data);
     }
+}
 
+impl PPUImpl {
+    pub fn new(bus: PPUBus, interrupt: Rc<RefCell<Interrupt>>) -> Self {
+        PPUImpl {
+            bus,
+            registers: register::PPURegisters::default(),
+            oam: oam::OAM::default(),
+            cycle: 0,
+            row: 0,
+            background: background::Background::default(),
+            sprites: Vec::new(),
+            interrupt,
+        }
+    }
     fn build_sprites(&mut self) -> () {
         self.sprites.clear();
         for sprite_data in self.oam.iter() {

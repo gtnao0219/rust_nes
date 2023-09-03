@@ -5,15 +5,15 @@ use crate::{
     controller::Controller,
     cpu::{CPUBus, CPU},
     interrupt,
-    ppu::{PPUBus, PPU},
+    ppu::{PPUBus, PPUImpl, PPU},
     renderer::Renderer,
 };
 
 pub struct NES {
-    cpu: CPU,
-    ppu: Rc<RefCell<PPU>>,
+    cpu: CPU<PPUImpl>,
+    ppu: Rc<RefCell<PPUImpl>>,
     controller: Rc<RefCell<Controller>>,
-    dma: Rc<RefCell<crate::dma::DMA>>,
+    dma: Rc<RefCell<crate::dma::DMA<PPUImpl>>>,
 }
 
 impl NES {
@@ -22,7 +22,7 @@ impl NES {
 
         let interrupt = Rc::new(RefCell::new(interrupt::Interrupt::default()));
         let ppu_bus = PPUBus::new(cartridge.character_rom, cartridge.is_horizontal_mirroring);
-        let ppu = Rc::new(RefCell::new(PPU::new(ppu_bus, interrupt.clone())));
+        let ppu = Rc::new(RefCell::new(PPUImpl::new(ppu_bus, interrupt.clone())));
         let controller = Rc::new(RefCell::new(Controller::default()));
         let wram = Rc::new(RefCell::new(crate::cpu::WRAM::default()));
         let dma = Rc::new(RefCell::new(crate::dma::DMA::new(

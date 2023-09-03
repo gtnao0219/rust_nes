@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{interrupt::Interrupt, log, ram::RAM, Byte, Cycle, Word};
+use crate::{interrupt::Interrupt, log, ppu::PPU, ram::RAM, Byte, Cycle, Word};
 
 mod bus;
 mod decoder;
@@ -13,14 +13,14 @@ pub use bus::CPUBus;
 const WRAM_SIZE: usize = 2048;
 pub type WRAM = RAM<WRAM_SIZE>;
 
-pub struct CPU {
-    bus: CPUBus,
+pub struct CPU<P: PPU> {
+    bus: CPUBus<P>,
     register: register::CPURegister,
     interrupt: Rc<RefCell<Interrupt>>,
 }
 
-impl CPU {
-    pub fn new(bus: CPUBus, interrupt: Rc<RefCell<Interrupt>>) -> Self {
+impl<P: PPU> CPU<P> {
+    pub fn new(bus: CPUBus<P>, interrupt: Rc<RefCell<Interrupt>>) -> Self {
         CPU {
             bus,
             register: register::CPURegister::default(),

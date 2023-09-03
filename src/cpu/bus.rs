@@ -4,21 +4,21 @@ use crate::{controller::Controller, dma::DMA, log, ppu::PPU, rom::ROM, Byte, Wor
 
 use super::WRAM;
 
-pub struct CPUBus {
+pub struct CPUBus<P: PPU> {
     program_rom: ROM,
     wram: Rc<RefCell<WRAM>>,
-    ppu: Rc<RefCell<PPU>>,
+    ppu: Rc<RefCell<P>>,
     controller: Rc<RefCell<Controller>>,
-    dma: Rc<RefCell<DMA>>,
+    dma: Rc<RefCell<DMA<P>>>,
 }
 
-impl CPUBus {
+impl<P: PPU> CPUBus<P> {
     pub fn new(
         program_rom: ROM,
         wram: Rc<RefCell<WRAM>>,
-        ppu: Rc<RefCell<PPU>>,
+        ppu: Rc<RefCell<P>>,
         controller: Rc<RefCell<Controller>>,
-        dma: Rc<RefCell<DMA>>,
+        dma: Rc<RefCell<DMA<P>>>,
     ) -> Self {
         CPUBus {
             program_rom,
