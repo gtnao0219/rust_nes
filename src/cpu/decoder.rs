@@ -85,17 +85,12 @@ pub fn decode<P: PPU>(cpu: &mut CPU<P>, opcode: &Opcode) -> DecodeResult {
             }
         }
         Addressing::Indirect => {
-            let address = cpu.fetch_word();
-
-            // bug
-            let indirect_address_low = cpu.read_byte(address) as Word;
-            let indirect_address_high =
-                cpu.read_byte((address & 0xFF00) | ((address + 1) & 0x00FF)) as Word;
-            let indirect_address = (indirect_address_high << 8) | indirect_address_low;
-
+            let lo = cpu.fetch_word();
+            let hi = (lo & 0xff00) | (lo as u8).wrapping_add(1) as u16;
+            let address = cpu.read_byte(lo) as u16 | (cpu.read_byte(hi) as u16) << 8;
             DecodeResult {
-                operand: indirect_address,
-                page_crossed: page_crossed(address, indirect_address),
+                operand: address,
+                page_crossed: false,
             }
         }
         Addressing::IndirectX => {
@@ -118,7 +113,7 @@ pub fn decode<P: PPU>(cpu: &mut CPU<P>, opcode: &Opcode) -> DecodeResult {
             let address_high = cpu.read_byte((base + 1) & 0x00FF) as Word;
             let address = (address_high << 8) | address_low;
             let offset = cpu.get_register().get_y() as Word;
-            let indirect_address = address + offset;
+            let indirect_address = (address as u32 + offset as u32) as Word;
             DecodeResult {
                 operand: indirect_address,
                 page_crossed: page_crossed(indirect_address, address),
@@ -403,5 +398,145 @@ mod tests {
         let result = decode(&mut cpu, &opcode);
         assert_eq!(result.operand, 0x0100);
         assert_eq!(result.page_crossed, true);
+    }
+
+    #[test]
+    fn test_decode_indirect_x() {
+        let mut program_rom_data = vec![0x00; 0x8000];
+        program_rom_data[0x0000] = 0x01;
+        program_rom_data[0x0001] = 0xFF;
+        program_rom_data[0x0002] = 0xFE;
+        program_rom_data[0x0003] = 0x00;
+        let program_rom = ROM::new(program_rom_data);
+        let mut cpu = prepare_cpu(program_rom);
+        let opcode = Opcode {
+            base_name: OpcodeBaseName::JMP,
+            addressing: Addressing::IndirectX,
+            cycle: 5,
+        };
+        // pc: 0x8000 -> 0x01
+        // x: 0x01
+        // base: 0x02(0x01 + 0x01)
+        // read: 0x0002 -> 0x02, 0x0003 -> 0x03
+        cpu.get_register().set_pc(0x8000);
+        cpu.get_register().set_x(0x01);
+        cpu.write(0x0002, 0x02);
+        cpu.write(0x0003, 0x03);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0302);
+        assert_eq!(result.page_crossed, true);
+
+        // pc: 0x8001 -> 0xFF
+        // x: 0x02
+        // base: 0x01(0xFF + 0x02)
+        // read: 0x0001 -> 0x01, 0x0002 -> 0x02
+        cpu.get_register().set_x(0x02);
+        cpu.write(0x0001, 0x01);
+        cpu.write(0x0002, 0x02);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0201);
+        assert_eq!(result.page_crossed, true);
+
+        // pc: 0x8002 -> 0xFE
+        // x: 0x01
+        // base: 0xFF(0xFE + 0x01)
+        // read: 0x00FF -> 0xFF, 0x0000 -> 0xEE
+        cpu.get_register().set_x(0x01);
+        cpu.write(0x0000, 0xEE);
+        cpu.write(0x00FF, 0xFF);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0xEEFF);
+        assert_eq!(result.page_crossed, true);
+
+        // pc: 0x8003 -> 0x00
+        // x: 0x01
+        // base: 0x01(0x00 + 0x01)
+        // read: 0x0001 -> 0x01, 0x0002 -> 0x00
+        cpu.get_register().set_x(0x01);
+        cpu.write(0x0001, 0x01);
+        cpu.write(0x0002, 0x00);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0001);
+        assert_eq!(result.page_crossed, false);
+    }
+
+    #[test]
+    fn test_decode_indirect_y() {
+        let mut program_rom_data = vec![0x00; 0x8000];
+        program_rom_data[0x0000] = 0x01;
+        program_rom_data[0x0001] = 0xFF;
+        program_rom_data[0x0002] = 0x01;
+        let program_rom = ROM::new(program_rom_data);
+        let mut cpu = prepare_cpu(program_rom);
+        let opcode = Opcode {
+            base_name: OpcodeBaseName::JMP,
+            addressing: Addressing::IndirectY,
+            cycle: 5,
+        };
+        // pc: 0x8000 -> 0x01
+        // read: 0x0001 -> 0x01, 0x0002 -> 0x02
+        // base: 0x0201
+        // y: 0x01
+        cpu.get_register().set_pc(0x8000);
+        cpu.write(0x0001, 0x01);
+        cpu.write(0x0002, 0x02);
+        cpu.get_register().set_y(0x01);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0202);
+        assert_eq!(result.page_crossed, false);
+
+        // pc: 0x8001 -> 0xFF
+        // read: 0x00FF -> 0xFF, 0x0000 -> 0xEE
+        // base: 0xEEFF
+        // y: 0x01
+        cpu.write(0x00FF, 0xFF);
+        cpu.write(0x0000, 0xEE);
+        cpu.get_register().set_y(0x01);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0xEF00);
+        assert_eq!(result.page_crossed, true);
+
+        // pc: 0x8002 -> 0x01
+        // read: 0x0001 -> 0xFE, 0x0002 -> 0xFF
+        // base: 0xFFFE
+        // y: 0x03
+        cpu.write(0x0001, 0xFE);
+        cpu.write(0x0002, 0xFF);
+        cpu.get_register().set_y(0x03);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0001);
+        assert_eq!(result.page_crossed, true);
+    }
+
+    #[test]
+    fn test_decode_indirect() {
+        let mut program_rom_data = vec![0x00; 0x8000];
+        program_rom_data[0x0000] = 0x90;
+        program_rom_data[0x0001] = 0xA0;
+        program_rom_data[0x0002] = 0xFF;
+        program_rom_data[0x0003] = 0xA0;
+        program_rom_data[0x2090] = 0x01;
+        program_rom_data[0x2091] = 0x02;
+        program_rom_data[0x20FF] = 0x03;
+        program_rom_data[0x2000] = 0x04;
+        let program_rom = ROM::new(program_rom_data);
+        let mut cpu = prepare_cpu(program_rom);
+        let opcode = Opcode {
+            base_name: OpcodeBaseName::JMP,
+            addressing: Addressing::Indirect,
+            cycle: 5,
+        };
+        // pc: 0x8000 -> 0x90, 0x8001 -> 0xA0
+        // read: 0xA090 -> 0x01, 0xA091 -> 0x02
+        cpu.get_register().set_pc(0x8000);
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0201);
+        assert_eq!(result.page_crossed, false);
+
+        // pc: 0x8002 -> 0xFF, 0x8003 -> 0xA0
+        // read: 0xA0FF -> 0x03, 0xA000 -> 0x04
+        let result = decode(&mut cpu, &opcode);
+        assert_eq!(result.operand, 0x0403);
+        assert_eq!(result.page_crossed, false);
     }
 }
